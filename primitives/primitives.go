@@ -94,7 +94,7 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
  * stub: The blockchain that holds the string we're want.
  * strkey: The key under which the string is stored.
  */
-func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, strkey string) ([]byte, error) {
+func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var strvalBytes []byte  // The actual value of the string
 	
 	if(len(args) != 1) {
