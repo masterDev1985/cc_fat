@@ -70,7 +70,7 @@ func (t *SimpleChaincode) initImgSrc(stub *shim.ChaincodeStub, args []string) ([
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
 	
-	
+	return nil, nil
 }
 
 // Run callback representing the invocation of a chaincode
