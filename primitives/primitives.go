@@ -95,6 +95,7 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
  * strkey: The key under which the string is stored.
  */
 func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+    var strkey string
 	var strvalBytes []byte  // The actual value of the string
 	
 	if(len(args) != 1) {
@@ -125,7 +126,7 @@ func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, args []string) ([]
 func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	if function == "string" {
 		return t.getstring(stub, args);
-	} else if funciton == "number" {
+	} else if function == "number" {
 		
 	} else if function != "number" {
 		return nil, errors.New("Invalid query function name. Expecting \"query\"")
