@@ -118,7 +118,7 @@ func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, args []string) ([]
 		return nil, errors.New(jsonResp)
 	}
     // Add quotes to the string or it will cause an invalid json to be created.
-    strvalBytes = []byte("\"" + string(strvalBytes) + "\"")
+    strvalBytes = []byte(fmt.Sprintf("\"%s\"", string(strvalBytes)))
 	
 	jsonResp := "{\"StringKey\":\"" + strkey + "\",\"Value\":\"" + string(strvalBytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
