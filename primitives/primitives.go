@@ -125,7 +125,7 @@ func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, args []string) ([]
 // Query callback representing the query of a chaincode
 func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	if function == "string" {
-		return t.getstring(stub, args);
+		return t.getstring(stub, args)
 	} else if function == "number" {
 		
 	} else if function != "number" {
