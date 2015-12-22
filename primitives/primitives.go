@@ -47,9 +47,8 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 
 	// Parse the protected string from the arguments
 	strkey = args[0]
-    
-	strval = []byte("\"" + args[1] + "\"")
-    fmt.Printf("String %s = %s\n", strkey, strval)
+	strval = []byte(args[1])
+    fmt.Printf("String %s = %s\n", strkey, string(strval))
 
 	// Write the state to the ledger
 	err = stub.PutState(strkey, strval)
