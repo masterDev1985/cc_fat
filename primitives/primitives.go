@@ -47,7 +47,8 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 
 	// Parse the protected string from the arguments
 	strkey = args[0]
-	strval = []byte(args[1])
+    
+	strval = []byte("\"" + args[1] + "\"")
     fmt.Printf("String %s = %s\n", strkey, strval)
 
 	// Write the state to the ledger
@@ -117,6 +118,8 @@ func (t *SimpleChaincode) getstring(stub *shim.ChaincodeStub, args []string) ([]
 		jsonResp := "{\"Error\":\"Nil amount for " + strkey + "\"}"
 		return nil, errors.New(jsonResp)
 	}
+    // Add quotes to the string or it will cause an invalid json to be created.
+    strvalBytes = []byte("\"" + string(strvalBytes) + "\"")
 	
 	jsonResp := "{\"StringKey\":\"" + strkey + "\",\"Value\":\"" + string(strvalBytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
