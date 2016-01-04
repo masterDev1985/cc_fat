@@ -6,13 +6,13 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "form-data/form-data.d.ts": {
-      "commit": "36c6ce86fb64bafb28ec95dc78c6b98228b45c8d"
+      "commit": "4c41545030eba44b27ce7209112dbf862f6b1d78"
     },
     "node/node.d.ts": {
-      "commit": "36c6ce86fb64bafb28ec95dc78c6b98228b45c8d"
+      "commit": "4c41545030eba44b27ce7209112dbf862f6b1d78"
     },
     "request/request.d.ts": {
-      "commit": "36c6ce86fb64bafb28ec95dc78c6b98228b45c8d"
+      "commit": "4c41545030eba44b27ce7209112dbf862f6b1d78"
     },
     "bluebird/bluebird.d.ts": {
       "commit": "36c6ce86fb64bafb28ec95dc78c6b98228b45c8d"

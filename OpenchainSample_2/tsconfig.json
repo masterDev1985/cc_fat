@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es3",
+        "target": "es5",
         "noImplicitAny": false,
         "outDir": "built",
         "rootDir": ".",
-        "sourceMap": false
+        "sourceMap": true
     },
     "exclude": [
         "node_modules"
@@ -13,6 +13,8 @@
     "files": [
         "./api.ts",
         "./typings/request/request.d.ts",
-        "./typings/bluebird/bluebird.d.ts"
+        "./typings/bluebird/bluebird.d.ts",
+        "./tsd.json",
+        "./typings/tsd.d.ts"
     ]
 }

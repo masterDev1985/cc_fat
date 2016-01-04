@@ -153,10 +153,9 @@ export class ChaincodeMessage {
 }
 
 export class Error {
-    /**
-    * A descriptive message explaining the cause of error.
-    */
-    error: string;
+
+    constructor(public error: string) {
+    }
 }
 
 export class OK {
@@ -241,7 +240,7 @@ export class StateApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1&T2>objA;
+        return <T1|T2>objA;
     }
 
     public getChaincodeState (chaincodeID: string, key: string) : Promise<{ response: http.ClientResponse; body: State;  }> {
@@ -328,7 +327,7 @@ export class BlockchainApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1&T2>objA;
+        return <T1|T2>objA;
     }
 
     public getChain () : Promise<{ response: http.ClientResponse; body: BlockchainInfo;  }> {
@@ -403,7 +402,7 @@ export class BlockApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1&T2>objA;
+        return <T1|T2>objA;
     }
 
     public getBlock (block: number) : Promise<{ response: http.ClientResponse; body: Block;  }> {
@@ -484,7 +483,7 @@ export class DevopsApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1&T2>objA;
+        return <T1|T2>objA;
     }
 
     public chaincodeBuild (chaincodeSpec: ChaincodeSpec) : Promise<{ response: http.ClientResponse; body: OK;  }> {

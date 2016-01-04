@@ -14,7 +14,7 @@ var openchain = require("./built/api.js");
 // Initialize the constructor with an empty url string, as default address
 // of the local peer node is already set inside the api.js to
 // 'http://127.0.0.1:3000'.
-var blockchain = new openchain.BlockApi('');
+var blockchain = new openchain.BlockApi('', 'http://108.168.183.174:5000');
 
 // The api.js exposes the APIs with the use of Promises as async callbacks.
 
@@ -30,6 +30,9 @@ promise.then(function(block) {
     console.log(block.body);
     console.log('\n');
     return;
+}, function(resp) {
+    "use strict";
+    console.log(resp.body);
 });
 
 /**********
@@ -45,7 +48,7 @@ promise.then(function(block) {
 // Initialize the constructor with an empty url string, as default address
 // of the local peer node is already set inside the api.js to
 // 'http://127.0.0.1:3000'.
-var blockchain = new openchain.BlockchainApi('');
+var blockchain = new openchain.BlockchainApi('', 'http://108.168.183.174:5000');
 
 // The api.js exposes the APIs with the use of Promises as async callbacks.
 
@@ -75,7 +78,7 @@ promise.then(function(blockchain) {
 // Initialize the constructor with an empty url string, as default address
 // of the local peer node is already set inside the api.js to
 // 'http://127.0.0.1:3000'.
-var blockchain = new openchain.StateApi('');
+var blockchain = new openchain.StateApi('', 'http://108.168.183.174:5000');
 
 // The api.js exposes the APIs with the use of Promises as async callbacks.
 
@@ -90,6 +93,9 @@ promise.then(function(state) {
     console.log(state.body);
     console.log('\n');
     return;
+}, function(resp) {
+    "use strict";
+    console.log(resp.body);
 });
 
 /**********
@@ -105,7 +111,7 @@ promise.then(function(state) {
 // Initialize the constructor with an empty url string, as default address
 // of the local peer node is already set inside the api.js to
 // 'http://127.0.0.1:3000'.
-var blockchain = new openchain.DevopsApi('');
+var blockchain = new openchain.DevopsApi('', 'http://108.168.183.174:5000');
 
 // The api.js exposes the APIs with the use of Promises as async callbacks.
 

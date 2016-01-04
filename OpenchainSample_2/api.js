@@ -79,8 +79,7 @@ var ChaincodeMessage = (function () {
 })();
 exports.ChaincodeMessage = ChaincodeMessage;
 var Error = (function () {
-    function Error(error) {
-        this.error = error;
+    function Error() {
     }
     return Error;
 })();
@@ -138,7 +137,7 @@ var StateApi = (function () {
         this.basePath = 'http://127.0.0.1:3000';
         this.defaultHeaders = {};
         this.authentications = {
-            'default': new VoidAuth(),
+            'default': new VoidAuth()
         };
         if (password) {
             if (basePath) {
@@ -181,7 +180,7 @@ var StateApi = (function () {
             qs: queryParameters,
             headers: headerParams,
             uri: path,
-            json: true,
+            json: true
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -216,7 +215,7 @@ var BlockchainApi = (function () {
         this.basePath = 'http://127.0.0.1:3000';
         this.defaultHeaders = {};
         this.authentications = {
-            'default': new VoidAuth(),
+            'default': new VoidAuth()
         };
         if (password) {
             if (basePath) {
@@ -249,7 +248,7 @@ var BlockchainApi = (function () {
             qs: queryParameters,
             headers: headerParams,
             uri: path,
-            json: true,
+            json: true
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -284,7 +283,7 @@ var BlockApi = (function () {
         this.basePath = 'http://127.0.0.1:3000';
         this.defaultHeaders = {};
         this.authentications = {
-            'default': new VoidAuth(),
+            'default': new VoidAuth()
         };
         if (password) {
             if (basePath) {
@@ -322,7 +321,7 @@ var BlockApi = (function () {
             qs: queryParameters,
             headers: headerParams,
             uri: path,
-            json: true,
+            json: true
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -357,7 +356,7 @@ var DevopsApi = (function () {
         this.basePath = 'http://127.0.0.1:3000';
         this.defaultHeaders = {};
         this.authentications = {
-            'default': new VoidAuth(),
+            'default': new VoidAuth()
         };
         if (password) {
             if (basePath) {
@@ -395,7 +394,7 @@ var DevopsApi = (function () {
             headers: headerParams,
             uri: path,
             json: true,
-            body: chaincodeSpec,
+            body: chaincodeSpec
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -438,7 +437,7 @@ var DevopsApi = (function () {
             headers: headerParams,
             uri: path,
             json: true,
-            body: chaincodeSpec,
+            body: chaincodeSpec
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -481,7 +480,7 @@ var DevopsApi = (function () {
             headers: headerParams,
             uri: path,
             json: true,
-            body: chaincodeInvocationSpec,
+            body: chaincodeInvocationSpec
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -524,7 +523,7 @@ var DevopsApi = (function () {
             headers: headerParams,
             uri: path,
             json: true,
-            body: chaincodeInvocationSpec,
+            body: chaincodeInvocationSpec
         };
         this.authentications.default.applyToRequest(requestOptions);
         if (Object.keys(formParams).length) {
@@ -553,4 +552,3 @@ var DevopsApi = (function () {
     return DevopsApi;
 })();
 exports.DevopsApi = DevopsApi;
-//# sourceMappingURL=api.js.map
