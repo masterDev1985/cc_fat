@@ -276,13 +276,13 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	}
 
 	name = args[0]
-	value, err = strconv.Atoi(args[1])
+	/*value, err = strconv.Atoi(args[1])
 	if err != nil {
 		return nil, errors.New("Expecting integer value for var value")
 	}
-	
+	*/
 	// Write the state back to the ledger
-	err = stub.PutState(name, []byte(strconv.Itoa(value)))
+	err = stub.PutState(name, []byte(args[1]))
 	if err != nil {
 		return nil, err
 	}
