@@ -36,9 +36,31 @@ type SimpleChaincode struct {
 
 
 //dsh test
+//this version adds write
 
 
-
+/*
+@-',---
+{
+	"consumptionSpec":{
+		"vars":{
+			"A": "string",
+			"B": "string"
+		}
+		func:{
+			"invoke":{
+				"from_var": string,
+				"to_var": string,
+				"value": integer
+			},
+			"init":{
+				
+			}
+		}
+	}
+}
+--,'-@
+*/
 
 
 func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
@@ -124,23 +146,23 @@ func (t *SimpleChaincode) invoke(stub *shim.ChaincodeStub, args []string) ([]byt
 
 	// Get the state from the ledger
 	// TODO: will be nice to have a GetAllState call to ledger
-	Avalbytes, err := stub.GetState(A)
+	aValArrBytes, err := stub.GetState(A)
 	if err != nil {
 		return nil, errors.New("Failed to get state")
 	}
-	if Avalbytes == nil {
+	if aValArrBytes == nil {
 		return nil, errors.New("Entity not found")
 	}
-	Aval, _ = strconv.Atoi(string(Avalbytes))
+	Aval, _ = strconv.Atoi(string(aValArrBytes))
 
-	Bvalbytes, err := stub.GetState(B)
+	bValArrBytes, err := stub.GetState(B)
 	if err != nil {
 		return nil, errors.New("Failed to get state")
 	}
-	if Avalbytes == nil {
+	if aValArrBytes == nil {
 		return nil, errors.New("Entity not found")
 	}
-	Bval, _ = strconv.Atoi(string(Bvalbytes))
+	Bval, _ = strconv.Atoi(string(bValArrBytes))
 
 	// Perform the execution
 	X, err = strconv.Atoi(args[2])
@@ -193,6 +215,9 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	} else if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
+	} else if function == "write" {
+		// Writes a value to the chaincode state
+		return t.Write(stub, args)
 	}
 
 	return nil, errors.New("Received unknown function invocation")
@@ -203,33 +228,25 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 	if function != "query" {
 		return nil, errors.New("Invalid query function name. Expecting \"query\"")
 	}
-	var A string // Entities
+	var name string // Entities
 	var err error
 
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the person to query")
 	}
 
-	A = args[0]
+	name = args[0]
 
 	// Get the state from the ledger
-	Avalbytes, err := stub.GetState(A)
+	AvalArrbytes, err := stub.GetState(name)
 	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get state for " + name + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
-	// If the amout is nil, shouldn't the query still be returned?
-	/*
-	if Avalbytes == nil {
-		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
-		return nil, errors.New(jsonResp)
-	}
-	*/
-
-	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
+	jsonResp := "{\"Name\":\"" + name + "\",\"Amount\":\"" + string(AvalArrbytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
-	return Avalbytes, nil
+	return AvalArrbytes, nil
 }
 
 func main() {
@@ -238,3 +255,32 @@ func main() {
 		fmt.Printf("Error starting Simple chaincode: %s", err)
 	}
 }
+
+//----------------------------------------------------------------------------------------------------------------------------------
+// Write var into chaincode state
+func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+	var name string // Entities
+	var err error
+	var value int
+
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
+	}
+
+	name = args[0]
+	value, err = strconv.Atoi(args[1])
+	if err != nil {
+		return nil, errors.New("Expecting integer value for var value")
+	}
+	
+	// Write the state back to the ledger
+	err = stub.PutState(name, []byte(strconv.Itoa(value)))
+	if err != nil {
+		return nil, err
+	}
+
+	jsonResp := "{\"Name\":\"" + name + "\",\"Amount\":\"" + string(value) + "\"}"
+	fmt.Printf("Write Response:%s\n", jsonResp)
+	return nil, nil
+}
+
