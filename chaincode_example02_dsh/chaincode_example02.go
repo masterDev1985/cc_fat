@@ -269,25 +269,20 @@ func main() {
 func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var name string // Entities
 	var err error
-	var value int
 
 	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
 	}
 
 	name = args[0]
-	/*value, err = strconv.Atoi(args[1])
-	if err != nil {
-		return nil, errors.New("Expecting integer value for var value")
-	}
-	*/
+
 	// Write the state back to the ledger
 	err = stub.PutState(name, []byte(args[1]))
 	if err != nil {
 		return nil, err
 	}
 
-	jsonResp := "{\"Name\":\"" + name + "\",\"Amount\":\"" + string(value) + "\"}"
+	jsonResp := "{\"Name\":\"" + name + "\",\"Amount\":\"" + args[1] + "\"}"
 	fmt.Printf("Write Response:%s\n", jsonResp)
 	return nil, nil
 }
