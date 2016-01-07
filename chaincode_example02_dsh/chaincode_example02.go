@@ -146,23 +146,23 @@ func (t *SimpleChaincode) invoke(stub *shim.ChaincodeStub, args []string) ([]byt
 
 	// Get the state from the ledger
 	// TODO: will be nice to have a GetAllState call to ledger
-	aValArrBytes, err := stub.GetState(A)
+	Avalbytes, err := stub.GetState(A)
 	if err != nil {
 		return nil, errors.New("Failed to get state")
 	}
-	if aValArrBytes == nil {
+	if Avalbytes == nil {
 		return nil, errors.New("Entity not found")
 	}
-	Aval, _ = strconv.Atoi(string(aValArrBytes))
+	Aval, _ = strconv.Atoi(string(Avalbytes))
 
-	bValArrBytes, err := stub.GetState(B)
+	Bvalbytes, err := stub.GetState(B)
 	if err != nil {
 		return nil, errors.New("Failed to get state")
 	}
-	if aValArrBytes == nil {
+	if Avalbytes == nil {
 		return nil, errors.New("Entity not found")
 	}
-	Bval, _ = strconv.Atoi(string(bValArrBytes))
+	Bval, _ = strconv.Atoi(string(Bvalbytes))
 
 	// Perform the execution
 	X, err = strconv.Atoi(args[2])
@@ -228,25 +228,33 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 	if function != "query" {
 		return nil, errors.New("Invalid query function name. Expecting \"query\"")
 	}
-	var name string // Entities
+	var A string // Entities
 	var err error
 
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the person to query")
 	}
 
-	name = args[0]
+	A = args[0]
 
 	// Get the state from the ledger
-	AvalArrbytes, err := stub.GetState(name)
+	Avalbytes, err := stub.GetState(A)
 	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + name + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
-	jsonResp := "{\"Name\":\"" + name + "\",\"Amount\":\"" + string(AvalArrbytes) + "\"}"
+	// If the amout is nil, shouldn't the query still be returned?
+	/*
+	if Avalbytes == nil {
+		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
+		return nil, errors.New(jsonResp)
+	}
+	*/
+
+	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
-	return AvalArrbytes, nil
+	return Avalbytes, nil
 }
 
 func main() {
