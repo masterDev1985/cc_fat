@@ -211,7 +211,7 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return t.init(stub, args)
 	} else if function == "invoke" {
 		// Transaction makes payment of X units from A to B
-		return t.invoke(stub, args)
+		return t.Write(stub, args)
 	} else if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
@@ -282,8 +282,6 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 		return nil, err
 	}
 
-	jsonResp := "{\"Name\":\"" + name + "\",\"Amount\":\"" + args[1] + "\"}"
-	fmt.Printf("Write Response:%s\n", jsonResp)
 	return nil, nil
 }
 
