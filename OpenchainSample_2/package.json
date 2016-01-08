@@ -1,0 +1,24 @@
+{
+  "name": "openchainsample2",
+  "version": "1.0.0",
+  "description": "Describes how to use the typescript library with OBC",
+  "main": "./built/app.js",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "gulp": "^3.9.0",
+    "gulp-typescript": "^2.10.0",
+    "request": "^2.67.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
+  "scripts": {
+    "test": "node ./built/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://hub.jazz.net/git/averyd/cc_ex02"
+  },
+  "author": "Dale Avery",
+  "license": "ISC"
+}

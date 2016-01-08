@@ -79,6 +79,9 @@ var ChaincodeMessage = (function () {
 })();
 exports.ChaincodeMessage = ChaincodeMessage;
 var Error = (function () {
+    /**
+    * A descriptive message explaining the cause of error.
+    */
     function Error(error) {
         this.error = error;
     }

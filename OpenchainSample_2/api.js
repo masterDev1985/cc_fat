@@ -79,7 +79,8 @@ var ChaincodeMessage = (function () {
 })();
 exports.ChaincodeMessage = ChaincodeMessage;
 var Error = (function () {
-    function Error() {
+    function Error(error) {
+        this.error = error;
     }
     return Error;
 })();
