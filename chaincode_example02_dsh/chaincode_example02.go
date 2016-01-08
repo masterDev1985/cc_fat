@@ -211,7 +211,10 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return t.init(stub, args)
 	} else if function == "invoke" {
 		// Transaction makes payment of X units from A to B
-		return t.Write(stub, args)
+		return t.invoke(stub, args)
+	} else if function == "test" {
+		// Transaction makes payment of X units from A to B
+		return t.invoke(stub, args)
 	} else if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
@@ -270,14 +273,15 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	var name string // Entities
 	var err error
 
-	if len(args) != 2 {
+	/*if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
-	}
+	}*/
 
 	name = args[0]
 
 	// Write the state back to the ledger
-	err = stub.PutState(name, []byte(args[1]))
+	//err = stub.PutState(name, []byte(args[1]))
+	err = stub.PutState(name, []byte("66"))
 	if err != nil {
 		return nil, err
 	}
