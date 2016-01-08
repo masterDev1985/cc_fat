@@ -221,9 +221,9 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	} else if function == "invoke" {
 		// Transaction makes payment of X units from A to B
 		return t.invoke(stub, args)
-	} else if function == "test" {
+	} else if function == "init_person" {
 		// Transaction makes payment of X units from A to B
-		return t.invoke(stub, args)
+		return t.init_person(stub, args)
 	} else if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
