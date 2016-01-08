@@ -247,14 +247,6 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 		return nil, errors.New(jsonResp)
 	}
 
-	// If the amout is nil, shouldn't the query still be returned?
-	/*
-	if Avalbytes == nil {
-		jsonResp := "{\"Error\":\"Nil amount for " + A + "\"}"
-		return nil, errors.New(jsonResp)
-	}
-	*/
-
 	jsonResp := "{\"Name\":\"" + A + "\",\"Amount\":\"" + string(Avalbytes) + "\"}"
 	fmt.Printf("Query Response:%s\n", jsonResp)
 	return Avalbytes, nil
@@ -273,15 +265,14 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	var name string // Entities
 	var err error
 
-	/*if len(args) != 2 {
+	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
-	}*/
+	}
 
 	name = args[0]
 
 	// Write the state back to the ledger
-	//err = stub.PutState(name, []byte(args[1]))
-	err = stub.PutState(name, []byte("66"))
+	err = stub.PutState(name, []byte(args[1]))
 	if err != nil {
 		return nil, err
 	}

@@ -273,15 +273,14 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	var name string // Entities
 	var err error
 
-	/*if len(args) != 2 {
+	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
-	}*/
+	}
 
 	name = args[0]
 
 	// Write the state back to the ledger
-	//err = stub.PutState(name, []byte(args[1]))
-	err = stub.PutState(name, []byte("66"))
+	err = stub.PutState(name, []byte(args[1]))
 	if err != nil {
 		return nil, err
 	}
