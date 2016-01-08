@@ -12,6 +12,7 @@
     ],
     "files": [
         "./api.ts",
+        "./app.ts",
         "./typings/request/request.d.ts",
         "./typings/bluebird/bluebird.d.ts",
         "./tsd.json",

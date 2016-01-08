@@ -83,11 +83,11 @@ export class ChaincodeID {
     /**
     * URL for accessing the Chaincode.
     */
-    url: string;
+    path: string;
     /**
-    * Current version of a Chaincode.
+    * The name of the Chaincode that is generated during chaincode deployment.
     */
-    version: string;
+    name: string;
 }
 
 export class State {
@@ -153,7 +153,9 @@ export class ChaincodeMessage {
 }
 
 export class Error {
-
+    /**
+    * A descriptive message explaining the cause of error.
+    */
     constructor(public error: string) {
     }
 }
@@ -163,6 +165,11 @@ export class OK {
     * A descriptive message confirming a successful request.
     */
     OK: string;
+
+    /**
+     * The name that is generated for deployed Chaincode.
+     */
+    name: string;
 }
 
 
@@ -240,7 +247,7 @@ export class StateApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1|T2>objA;
+        return <T1&T2>objA;
     }
 
     public getChaincodeState (chaincodeID: string, key: string) : Promise<{ response: http.ClientResponse; body: State;  }> {
@@ -327,7 +334,7 @@ export class BlockchainApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1|T2>objA;
+        return <T1&T2>objA;
     }
 
     public getChain () : Promise<{ response: http.ClientResponse; body: BlockchainInfo;  }> {
@@ -402,7 +409,7 @@ export class BlockApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1|T2>objA;
+        return <T1&T2>objA;
     }
 
     public getBlock (block: number) : Promise<{ response: http.ClientResponse; body: Block;  }> {
@@ -483,7 +490,7 @@ export class DevopsApi {
                 objA[key] = objB[key];
             }
         }
-        return <T1|T2>objA;
+        return <T1&T2>objA;
     }
 
     public chaincodeBuild (chaincodeSpec: ChaincodeSpec) : Promise<{ response: http.ClientResponse; body: OK;  }> {
