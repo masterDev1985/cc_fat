@@ -127,9 +127,11 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	if function == "init" {													// Initialize the entities and their asset holdings
 		return t.init(stub, args)
 	} else if function == "delete" {										// Deletes an entity from its state
-		return t.delete(stub, args)
+		return t.Delete(stub, args)
 	} else if function == "write" {											// Writes a value to the chaincode state
 		return t.Write(stub, args)
+	} else if function == "readnames" {										// Read all variable names in chaincode state
+		return t.ReadNames(stub, args)
 	} else if function == "init_person" {									//init_person
 		return t.init_person(stub, args)
 	} else if function == "init_car" {										//init car
@@ -146,7 +148,7 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 }
 
 // Deletes an entity from state
-func (t *SimpleChaincode) delete(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Delete(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 3")
 	}
@@ -221,6 +223,25 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	//t.remember_me(name, args[0])
 
 	return nil, nil
+}
+
+// ============================================================================================================================
+// Read Names return list of variables in state space
+// ============================================================================================================================
+func (t *SimpleChaincode) ReadNames(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+	var err error
+
+	var ben = "_ben_knows"
+	var storedNames string
+	
+	storedNamesAsBytes, err := stub.GetState(ben)
+	if err != nil {
+		return nil, errors.New("Failed to get ben")
+	}
+	storedNames = string(storedNamesAsBytes)
+	fmt.Println(storedNames)
+	
+	return storedNamesAsBytes, nil
 }
 
 // ============================================================================================================================

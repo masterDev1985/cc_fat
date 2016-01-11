@@ -224,6 +224,9 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	} else if function == "init_person" {
 		// Transaction makes payment of X units from A to B
 		return t.init_person(stub, args)
+	} else if function == "test" {
+		// Transaction makes payment of X units from A to B
+		return t.test(stub, args)
 	} else if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
@@ -306,6 +309,20 @@ func (t *SimpleChaincode) init_person(stub *shim.ChaincodeStub, args []string) (
 	//fmt.Println(res)
 
 	// Write the state back to the ledger
+	err = stub.PutState("test", []byte(str))
+	if err != nil {
+		return nil, err
+	}
+	
+	return nil, nil
+}
+
+
+func (t *SimpleChaincode) test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+	var err error
+
+	// Write the state back to the ledger
+	str := "hey there";
 	err = stub.PutState("test", []byte(str))
 	if err != nil {
 		return nil, err
