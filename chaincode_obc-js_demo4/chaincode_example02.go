@@ -285,25 +285,6 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	return nil, nil
 }
 
-func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {	var err error
-
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting name")
-	}
-
-	// Get the state from the ledger
-	Avalbytes, err := stub.GetState(args[0])
-	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + args[0] + "\"}"
-		return nil, errors.New(jsonResp)
-	}
-
-	strResp := `"` + string(Avalbytes) + `"`
-	
-	return []byte(strResp), nil
-}
-
-
 //----------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------
 // Transaction makes payment of X units from A to B
