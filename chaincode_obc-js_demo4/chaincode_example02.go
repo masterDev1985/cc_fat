@@ -233,6 +233,9 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	} else if function == "write" {
 		// Writes a value to the chaincode state
 		return t.Write(stub, args)
+	} else if function == "read" {
+		// Read value from the chaincode state
+		return t.Read(stub, args)
 	}
 
 	return nil, errors.New("Received unknown function invocation")
@@ -292,9 +295,7 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	return nil, nil
 }
 
-func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-	var A string // Entities
-	var err error
+func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte, error) {	var err error
 
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name")
@@ -303,7 +304,7 @@ func (t *SimpleChaincode) Read(stub *shim.ChaincodeStub, args []string) ([]byte,
 	// Get the state from the ledger
 	Avalbytes, err := stub.GetState(args[0])
 	if err != nil {
-		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
+		jsonResp := "{\"Error\":\"Failed to get state for " + args[0] + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
