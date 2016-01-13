@@ -25,7 +25,7 @@ import (
 	"strconv"
 	"math/rand"
 
-	"github.com/masterDev1985/obc-peer/openchain/chaincode/shim"
+	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
 )
 
 // SimpleChaincode example simple Chaincode implementation
