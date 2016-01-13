@@ -206,7 +206,7 @@ func main() {
 // Write var into chaincode state
 // ============================================================================================================================
 func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-	var name string // Entities
+	var name, value string // Entities
 	var err error
 
 	if len(args) != 2 {
@@ -214,13 +214,14 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	}
 
 	name = args[0]
+	value = args[1]
 
 	// Write the state back to the ledger
-	err = stub.PutState(name, []byte(args[1]))
+	err = stub.PutState(name, []byte(value))
 	if err != nil {
 		return nil, err
 	}
-	//t.remember_me(name, args[0])
+	//t.remember_me(name, name)
 
 	return nil, nil
 }
@@ -262,6 +263,24 @@ func (t *SimpleChaincode) init_person(stub *shim.ChaincodeStub, args []string) (
 		return nil, err
 	}
 	//t.remember_me(stub, args[0])
+	
+	return nil, nil
+}
+
+// ============================================================================================================================
+// Init TEST 
+// ============================================================================================================================
+func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+	var err error
+
+	str := `{"userid": "test", "fullname": "mr test"}`
+
+	// Write the state back to the ledger
+	err = stub.PutState("test", []byte(str))
+	if err != nil {
+		return nil, err
+	}
+	t.remember_me(stub, "test")
 	
 	return nil, nil
 }
