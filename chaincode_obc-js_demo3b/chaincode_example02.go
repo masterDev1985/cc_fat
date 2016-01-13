@@ -142,7 +142,9 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return t.get_permissions(stub, args)
 	} else if function == "set_user_perms" {								//set user permissions
 		return t.set_user_perms(stub, args)
-	}
+	} else if function == "init_test" {	
+		return t.init_test(stub, args)
+	} 
 
 	return nil, errors.New("Received unknown function invocation")
 }
