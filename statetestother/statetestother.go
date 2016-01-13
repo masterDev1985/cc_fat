@@ -19,7 +19,7 @@ under the License.
 
 // A string for making sure the hash of this code changes even
 // if the code is the same
-// HASHJUMBLER:ABCD
+// HASHJUMBLER:EFGH
 
 package main
 
