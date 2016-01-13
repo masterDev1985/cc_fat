@@ -27,7 +27,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"math/rand"
 
 	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
 )
