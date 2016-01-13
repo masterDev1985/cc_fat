@@ -275,7 +275,8 @@ func (t *SimpleChaincode) init_person(stub *shim.ChaincodeStub, args []string) (
 func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var err error
 
-	str := "\"{\"userid\": \"test\", \"fullname\": \"mr test\"}"
+	//str := "\"{\"userid\": \"test\", \"fullname\": \"mr test\"}"
+	str := "what is going on here"
 
 	// Write the state back to the ledger
 	err = stub.PutState("test", []byte(str))
