@@ -197,20 +197,16 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 		return nil, errors.New("Invalid query function name. Expecting \"query\"")
 	}
 	var A string // Entities
-    var uuid string
 	var err error
 
 	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting UUID and key to query")
 	}
     
-    stub.getState
-
-    uuid = args[0]
 	A = args[1]
 
 	// Get the state from the ledger
-	Avalbytes, err := stub.GetStateUUID(A, uuid)
+	Avalbytes, err := stub.GetState(A)
 	if err != nil {
 		jsonResp := "{\"Error\":\"Failed to get state for " + A + "\"}"
 		return nil, errors.New(jsonResp)
@@ -231,7 +227,7 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 
 // Allows a future piece of chaincode to use the same state
 func (t *SimpleChaincode) getUUID(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-	return []byte(stub.getUUID()), nil
+	return []byte(stub.GetUUID()), nil
 }
 
 func main() {
