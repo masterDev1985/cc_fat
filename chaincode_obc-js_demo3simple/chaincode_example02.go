@@ -120,7 +120,8 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 // Run
 // ============================================================================================================================
 func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
-
+	fmt.Println("run ran " + function)
+	
 	// Handle different functions
 	if function == "init" {													// Initialize the entities and their asset holdings
 		return t.init(stub, args)
@@ -137,7 +138,8 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 	} else if function == "init_test" {	
 		return t.init_test(stub, args)
 	} 
-
+	fmt.Println("run issues " + function)
+	
 	return nil, errors.New("Received unknown function invocation")
 }
 
@@ -217,6 +219,7 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	}
 	//t.remember_me(name, name)
 
+	fmt.Println("write ran for name" + name)
 	return nil, nil
 }
 
@@ -266,7 +269,7 @@ func (t *SimpleChaincode) init_person(stub *shim.ChaincodeStub, args []string) (
 // ============================================================================================================================
 func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var err error
-
+	fmt.Println("run init_test now")
 	//str := "\"{\"userid\": \"test\", \"fullname\": \"mr test\"}"
 	str := "what is going on here"
 
@@ -277,6 +280,7 @@ func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]
 	}
 	//t.remember_me(stub, "test")
 	
+	fmt.Println("run init_test good")
 	return nil, nil
 }
 
