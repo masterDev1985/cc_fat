@@ -122,6 +122,7 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 // Run
 // ============================================================================================================================
 func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
+	fmt.Println("run is running " + function)
 
 	// Handle different functions
 	if function == "init" {													// Initialize the entities and their asset holdings
@@ -142,9 +143,10 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return t.get_permissions(stub, args)
 	} else if function == "set_user_perms" {								//set user permissions
 		return t.set_user_perms(stub, args)
-	} else if function == "init_test" {	
-		return t.init_test(stub, args)
+	} else if function == "test" {	
+		return t.Test(stub, args)
 	} 
+	fmt.Println("run issues " + function)
 
 	return nil, errors.New("Received unknown function invocation")
 }
@@ -210,6 +212,7 @@ func main() {
 func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var name, value string // Entities
 	var err error
+	fmt.Println("running write - start")
 
 	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
@@ -223,8 +226,9 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	if err != nil {
 		return nil, err
 	}
-	//t.remember_me(name, name)
+	t.remember_me(stub, name)
 
+	fmt.Println("running write - fin - for name " + name)
 	return nil, nil
 }
 
@@ -245,6 +249,25 @@ func (t *SimpleChaincode) ReadNames(stub *shim.ChaincodeStub, args []string) ([]
 	fmt.Println(storedNames)
 	
 	return storedNamesAsBytes, nil
+}
+// ============================================================================================================================
+// Remember Me - remember the name of variables we stored in ledger 
+// ============================================================================================================================
+func (t *SimpleChaincode) remember_me(stub *shim.ChaincodeStub, name string) ([]byte, error) {		//dsh - to do, should probably not exist here, move to stub
+	var err error
+	var ben = "_ben_knows"
+	var storedNames string
+	storeNamesAsBytes, err := stub.GetState(ben)
+	if err != nil {
+		return nil, errors.New("Failed to get ben")
+	}
+	storedNames = string(storeNamesAsBytes)
+	// Write the state back to the ledger
+	err = stub.PutState(ben, []byte(storedNames + "," + name))										//dsh - to do, should probably be json
+	if err != nil {
+		return nil, err
+	}
+	return nil, nil
 }
 
 // ============================================================================================================================
@@ -272,9 +295,9 @@ func (t *SimpleChaincode) init_person(stub *shim.ChaincodeStub, args []string) (
 // ============================================================================================================================
 // Init TEST 
 // ============================================================================================================================
-func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+func (t *SimpleChaincode) Test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var err error
-
+	fmt.Println("run Test - start")
 	//str := "\"{\"userid\": \"test\", \"fullname\": \"mr test\"}"
 	str := "what is going on here"
 
@@ -285,6 +308,7 @@ func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]
 	}
 	t.remember_me(stub, "test")
 	
+	fmt.Println("run Test - fin")
 	return nil, nil
 }
 
@@ -320,29 +344,6 @@ func (t *SimpleChaincode) init_car(stub *shim.ChaincodeStub, args []string) ([]b
 		return nil, err
 	}
 	t.remember_me(stub, args[0]);
-	
-	return nil, nil
-}
-
-// ============================================================================================================================
-// Remeber Me - remember the name of variables we stored in ledger 
-// ============================================================================================================================
-func (t *SimpleChaincode) remember_me(stub *shim.ChaincodeStub, name string) ([]byte, error) {		//dsh - to do, should probably not exist here, move to stub
-	var err error
-	var ben = "_ben_knows"
-	var storedNames string
-	
-	storeNamesAsBytes, err := stub.GetState(ben)
-	if err != nil {
-		return nil, errors.New("Failed to get ben")
-	}
-	storedNames = string(storeNamesAsBytes)
-	
-	// Write the state back to the ledger
-	err = stub.PutState(ben, []byte(storedNames + "," + name))										//dsh - to do, should probably be json
-	if err != nil {
-		return nil, err
-	}
 	
 	return nil, nil
 }
