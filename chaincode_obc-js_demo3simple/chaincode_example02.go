@@ -204,7 +204,8 @@ func main() {
 func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var name, value string // Entities
 	var err error
-
+	fmt.Println("running write - start - for name " + name)
+	
 	if len(args) != 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the variable and value to set")
 	}
@@ -219,7 +220,7 @@ func (t *SimpleChaincode) Write(stub *shim.ChaincodeStub, args []string) ([]byte
 	}
 	//t.remember_me(name, name)
 
-	fmt.Println("write ran for name" + name)
+	fmt.Println("running write - fin - for name " + name)
 	return nil, nil
 }
 
@@ -269,7 +270,7 @@ func (t *SimpleChaincode) init_person(stub *shim.ChaincodeStub, args []string) (
 // ============================================================================================================================
 func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
 	var err error
-	fmt.Println("run init_test now")
+	fmt.Println("run init_test - start")
 	//str := "\"{\"userid\": \"test\", \"fullname\": \"mr test\"}"
 	str := "what is going on here"
 
@@ -280,7 +281,7 @@ func (t *SimpleChaincode) init_test(stub *shim.ChaincodeStub, args []string) ([]
 	}
 	//t.remember_me(stub, "test")
 	
-	fmt.Println("run init_test good")
+	fmt.Println("run init_test - fin")
 	return nil, nil
 }
 
