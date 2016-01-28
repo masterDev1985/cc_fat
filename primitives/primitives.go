@@ -59,32 +59,29 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	return nil, nil
 }
 
-/**
- * Creates a new Party that can own Images
- * Args:
- * 0 key: The key that will be associated with the owner
- * 1 name: The owner's name
- */
-func (t *SimpleChaincode) initImgSrc(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-	
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
-	}
-	
-	return nil, nil
+func (t *SimpleChaincode) initTest(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+    
+    if len(args) != 0 {
+        return nil, errors.New("Test initialization doesn't take in arguments.")
+    }
+    
+    // Create an example owner, asset, and licensee
+    
 }
 
 // Run callback representing the invocation of a chaincode
 func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 
 	// Handle different functions
-	if function == "init" {
+	if function == "newOwner" {
 		// Initialize
 		return t.init(stub, args)
-	} else if function == "initImgSrc" {
+	} else if function == "newLicensee" {
 		// Create a new photographer
-		return t.initImgSrc(stub, args)
-	}
+		return t.json(stub, args)
+	} else if function == "testInit" {
+        return t.
+    }
 
 	return nil, nil
 }
@@ -130,34 +127,10 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 	if function == "string" {
 		return t.getstring(stub, args)
 	} else if function == "number" {
-		
+		return nil, errors.new("number querying isn't implemented yet")
 	} else if function != "number" {
 		return nil, errors.New("Invalid query function name. Expecting \"query\"")
 	}
-	var A string // Entity
-	var Aval int // Asset holding
-	var err error
-
-	if len(args) != 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 2")
-	}
-
-	A = args[0]
-	Aval, err = strconv.Atoi(args[1])
-	if err != nil {
-		return nil, errors.New("Expecting integer value for asset holding")
-	}
-	fmt.Printf("Aval = %d\n", Aval)
-
-	// Write the state to the ledger - this put is illegal within Run
-	err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
-	if err != nil {
-		jsonResp := "{\"Error\":\"Cannot put state within chaincode query\"}"
-		return nil, errors.New(jsonResp)
-	}
-
-	fmt.Printf("Something is wrong. This query should not have succeeded")
-	return nil, nil
 }
 
 func main() {
